@@ -4,106 +4,161 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+// Класс желаний агента
 [Serializable]
 public class Desire
 {
     public string name;
     public float value;
     public string solverIntention;
+
+    [HideInInspector]
+    public AgentNeeds agent;
+    public void Initialize(AgentNeeds agent)
+    {
+        this.agent = agent;
+    }
+
+    public Queue<ExecutingIntention> GetSolution()
+    {
+        Intention solver = agent.GetIntention(solverIntention);
+        int cost = 0;
+        var solution = solver.CalculateCost(cost);
+        if (solution == null)
+        {
+            return null;
+        } else
+        {
+            return new Queue<ExecutingIntention>(solution);
+        }
+    }
 }
+
+
+// Класс намерений агента
 [Serializable]
 public class Intention
 {
     public string name;
     public IntentionPrimitiveTypeAction primitiveAction;
+    public string knowledgeAboutSmth;
+    //public List<ExecutingIntention> nextIntentions;
+    public List<string> nextIntentionsName = new List<string>();
     public Func<float> calculateCostFunc;
-    public string knowledgeLabel;
+
+
+    [HideInInspector]
+    public AgentNeeds agent;
+    public void Initialize(AgentNeeds agent)
+    {
+        this.agent = agent;
+    }
+    public Stack<ExecutingIntention> CalculateCost(int cost)
+    {
+        int baseCost = 0;
+        ExecutingIntention thisExecution;
+        return null;
+    }
 }
+// Класс исполняемых намерений ?
+[Serializable]
+public struct ExecutingIntention
+{
+    public Intention intentionBase;
+    public Transform goToObject;
+    public ExecutingIntention(Intention intentionBase)
+    {
+        this.intentionBase = intentionBase;
+        this.goToObject = null;
+    }
+    public ExecutingIntention(Intention intentionBase, Transform goToObject)
+    {
+        this.intentionBase = intentionBase;
+        this.goToObject = goToObject;
+    }
+}
+// Класс базовых действий для намерений
 public enum IntentionPrimitiveTypeAction : byte
 {
     None,
     GoTo,
-    TakeItem
-}
-public struct UnityBDIExecutingIntentionInfo
-{
-    public Intention intentionBase;
-    public BaseMapObject selectedMapObject;
-    public UnityBDIExecutingIntentionInfo(Intention intentionBase)
-    {
-        this.intentionBase = intentionBase;
-        this.selectedMapObject = null;
-    }
-    public UnityBDIExecutingIntentionInfo(Intention intentionBase, BaseMapObject selectedMapObject)
-    {
-        this.intentionBase = intentionBase;
-        this.selectedMapObject = selectedMapObject;
-    }
+    TakeItem,
+    Exchange,
+    UseSmartObject
 }
 
-public class AgentNeeds : MonoBehaviour {
-
-    List<Desire> desire = new List<Desire>();
+public class AgentNeeds : MonoBehaviour
+{    
+    [SerializeField]
     public Dictionary<string, int> items = new Dictionary<string, int>();
-
+    public List<Desire> desires = new List<Desire>();
     public List<Intention> intentions = new List<Intention>();
-    public Queue<UnityBDIExecutingIntentionInfo> intentionsQueue = new Queue<UnityBDIExecutingIntentionInfo>();
-    public Dictionary<string, HashSet<BaseMapObject>> knowledge_mapObjects = new Dictionary<string, HashSet<BaseMapObject>>();
-
-    public float hunger = 0f;
-    public float energy = 0f;
-    public float comfort = 0f;
-    public float hygiene = 0f;
-    public float fun = 0f;
-    public float overall = 0f;
-
-    public Transform fridge;
-    public Transform apple;
-    public Transform toilet;
-    public Transform sofa;
-
-    public float walkSpeed;
-
-    public bool nearApple;
 
     NavMeshAgent navAgent;
 
     void Start () {
-        hunger = 100f;
-        energy = 100f;
-        comfort = 100f;
-        hygiene = 100f;
-        fun = 100f;
         navAgent = GetComponent<NavMeshAgent>();
     }
 	
-	void Update () {
-        overall = (hunger + energy + comfort + hygiene + fun) / 5;
-        hunger -= Time.deltaTime / 9;
-        energy -= Time.deltaTime / 20;
-        comfort -= Time.deltaTime / 15;
-        hygiene -= Time.deltaTime / 11;
-        fun -= Time.deltaTime / 12;
-        Hungry();
-    }
-
-    void Hungry()
+	void Update ()
     {
-        navAgent.SetDestination(apple.position);
-        if(nearApple==true)
-        {
-            EatApple();
-        }
-        else
-        {
 
+        foreach (var desire in desires)
+        {
+            DescendByTime(desire.value, 10);
         }
     }
 
-    private void EatApple()
+    public void DescendByTime(float desire, float descending)
     {
-        GameObject apple = GameObject.Find("Apple");
-        hunger += 10f;
-        Destroy(apple);
+        desire = desire / descending * Time.deltaTime;
+    }
+
+    public void EatApple()
+    {
+        // Go to apple
+        // Eat apple
+        // +Satiety
+    }
+    public Intention GetIntention(string intentionName)
+    {
+        return intentions.Find(intention => intention.name.Equals(intentionName));
     }
 }
+
+//[Serializable]
+//public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
+//{
+//    [SerializeField]
+//    private List<TKey> keys = new List<TKey>();
+
+//    [SerializeField]
+//    private List<TValue> values = new List<TValue>();
+
+//    // save the dictionary to lists
+//    public void OnBeforeSerialize()
+//    {
+//        keys.Clear();
+//        values.Clear();
+//        foreach (KeyValuePair<TKey, TValue> pair in this)
+//        {
+//            keys.Add(pair.Key);
+//            values.Add(pair.Value);
+//        }
+//    }
+
+//    // load dictionary from lists
+//    public void OnAfterDeserialize()
+//    {
+//        this.Clear();
+
+//        if (keys.Count != values.Count)
+//            throw new System.Exception(string.Format("there are {0} keys and {1} values after deserialization. Make sure that both key and value types are serializable."));
+
+//        for (int i = 0; i < keys.Count; i++)
+//            this.Add(keys[i], values[i]);
+//    }
+//}
+//[Serializable]
+//public class DictionaryOfStringAndInt : SerializableDictionary<string, int> { }

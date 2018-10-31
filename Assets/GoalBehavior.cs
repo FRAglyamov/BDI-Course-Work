@@ -1,27 +1,47 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public struct Goal
+// Класс цели
+[Serializable]
+public class Goal // =Intention?Desire
 {
     public string name;
     public float value;
+    // Вычисление недовольства
+    public float getDiscontentment(float newValue)
+    {
+        return newValue * newValue;
+    }
 }
-public struct Action
+[Serializable]
+public class Action
 {
+    // Какую потребность удовлетворяет и насколько
     public float getGoalChange(Goal goal)
+    {
+        return 0f;
+    }
+    // Длительность выполнения действия
+    public float duration;
+    // ?
+    public float getDuration()
     {
         return 0f;
     }
 }
 
+
 public class GoalBehavior : MonoBehaviour {
 
-    public List<Action> actions = new List<Action>();
     public List<Goal> goals = new List<Goal>();
+    public List<Action> actions = new List<Action>();
 
-    Action chooseAction(List<Action> actions, List<Goal> goals)
+    public Action ChooseAction(List<Action> actions, List<Goal> goals)
     {
+        // Сначала выбираем какая цель имеет наибольшую важность
         Goal topGoal = goals[0];
         foreach (var goal in goals)
         {
@@ -31,9 +51,9 @@ public class GoalBehavior : MonoBehaviour {
             }
         }
 
+        // Находим наилучшее действие по полезности для заданной цели
         Action bestAction = actions[0];
         float bestUtility = -actions[0].getGoalChange(topGoal);
-
         foreach (var action in actions)
         {
             float utility = -action.getGoalChange(topGoal);
@@ -47,12 +67,11 @@ public class GoalBehavior : MonoBehaviour {
         return bestAction;
     }
 
-	// Use this for initialization
 	void Start () {
 		
 	}
 	
-	// Update is called once per frame
+
 	void Update () {
 		
 	}
