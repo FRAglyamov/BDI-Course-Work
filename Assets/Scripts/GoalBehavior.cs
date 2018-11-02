@@ -4,34 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-// Класс цели
-[Serializable]
-public class Goal // =Intention?Desire
-{
-    public string name;
-    public float value;
-    // Вычисление недовольства
-    public float getDiscontentment(float newValue)
-    {
-        return newValue * newValue;
-    }
-}
-[Serializable]
-public class Action
-{
-    // Какую потребность удовлетворяет и насколько
-    public float getGoalChange(Goal goal)
-    {
-        return 0f;
-    }
-    // Длительность выполнения действия
-    public float duration;
-    // ?
-    public float getDuration()
-    {
-        return 0f;
-    }
-}
+
+
 
 
 public class GoalBehavior : MonoBehaviour {
