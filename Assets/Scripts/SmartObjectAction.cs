@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using RotaryHeart.Lib.SerializableDictionary;
 
 [CreateAssetMenu(fileName = "New Smart Object Action", menuName = "Smart Object/Action")]
-public class SmartObjectAction : ScriptableObject
+public abstract class SmartObjectAction : ScriptableObject
 {
+    [SerializeField]
+    public DictionaryStringToFloat desireChanged;
     public Animation animation;
-    public Action action;
-    public virtual void Action()
-    {
+    public abstract void DoAction(GameObject player);
 
-    }
 }

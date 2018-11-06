@@ -34,7 +34,7 @@ public class SmartObjectEditor : Editor {
 
         EditorGUI.BeginChangeCheck();
         serializedObject.Update();
-        actionList.DoLayoutList();
+        //actionList.DoLayoutList();
         EditorUtility.SetDirty(target);
         if (EditorGUI.EndChangeCheck())
         {
