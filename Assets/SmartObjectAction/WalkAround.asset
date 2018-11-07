@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9062e478c811984391f093030f6963c, type: 3}
-  m_Name: Good Apple
+  m_Script: {fileID: 11500000, guid: 0d7f365c947d2964a8ad5acbebd2ebda, type: 3}
+  m_Name: WalkAround
   m_EditorClassIdentifier: 
   desireChanged:
     reorderableList:
@@ -18,7 +18,7 @@ MonoBehaviour:
       draggable: 1
       expandable: 1
       multipleSelection: 1
-      isExpanded: 1
+      isExpanded: 0
       label:
         m_Text: Keys
         m_Image: {fileID: 0}
@@ -33,15 +33,8 @@ MonoBehaviour:
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 1
-    _keyValues:
-    - Satiety
-    _keys:
-    - Satiety
-    _values:
-    - 20
-  playerInteractWithObject: 0
-  objectInteractionPlace: {fileID: 4743529087967226, guid: e442fed4b5812d34899a1e704fd5c3e3,
-    type: 2}
-  actions:
-  - {fileID: 11400000, guid: 789944e04ee395b4982feafce38185b7, type: 2}
+    isExpanded: 0
+    _keyValues: []
+    _keys: []
+    _values: []
+  animation: {fileID: 0}

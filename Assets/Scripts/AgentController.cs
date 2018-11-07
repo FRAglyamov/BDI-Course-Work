@@ -6,11 +6,18 @@ using UnityEngine.AI;
 
 public class AgentController : MonoBehaviour
 {
+    public enum AgentStates
+    {
+        Idle,
+        GoTo,
+        UseSmartObject
+    }
     [SerializeField]
     public Dictionary<string, int> items = new Dictionary<string, int>();
     public List<Desire> desires = new List<Desire>();
     public List<Intention> intentions = new List<Intention>();
     public List<GameObject> smartGOs = new List<GameObject>();
+    public AgentStates state;
 
     NavMeshAgent navAgent;
     public bool isWorking = false;
@@ -20,58 +27,59 @@ public class AgentController : MonoBehaviour
     {
         navAgent = GetComponent<NavMeshAgent>();
         smartGOs.AddRange(GameObject.FindGameObjectsWithTag("Smart Object"));
+        state = AgentStates.Idle;
     }
 
     void Update()
     {
+        smartGOs.Clear();
+        smartGOs.AddRange(GameObject.FindGameObjectsWithTag("Smart Object"));
+
+        switch (state)
+        {
+            case AgentStates.Idle:
+                if (desires.Exists(x => x.value < 80f) && smartGOs.Count > 0)
+                {
+                    bestGO = ChooseSmartObject();
+                    navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
+                    state = AgentStates.GoTo;
+                }
+                break;
+            case AgentStates.GoTo:
+                if (Vector3.Distance(navAgent.pathEndPosition, transform.position) > 0.1f)
+                {
+                    navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
+                }
+                else
+                {
+                    bestGO.GetComponent<SmartObjectController>().player = gameObject;
+                    bestGO.GetComponent<SmartObjectController>().smartObject.playerInteractWithObject = true;
+                    state = AgentStates.UseSmartObject;
+                }
+                break;
+            case AgentStates.UseSmartObject:
+                if (isWorking == false)
+                {
+                    state = AgentStates.Idle;
+                }
+                break;
+            default:
+                state = AgentStates.Idle;
+                break;
+        }
         foreach (var desire in desires)
         {
-            DescendByTime(desire.value, 10f);
+            DescendByTime(ref desire.value, 10f);
             if (desire.value > 100)
             {
                 desire.value = 100;
             }
         }
-        if (isWorking == false)
-        {
-            bestGO = ChooseSmartObject();
-            //navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().smartObject.objectInteractionPlace.position);
-            navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
-        }
-        //Debug.Log(navAgent.pathEndPosition);
-        //Debug.Log(transform.position);
-
-        if (Vector3.Distance(navAgent.pathEndPosition, transform.position) < 0.1f)
-        {
-            Debug.Log("IF==TRUE");
-            bestGO.GetComponent<SmartObjectController>().player = gameObject;
-            bestGO.GetComponent<SmartObjectController>().smartObject.playerInteractWithObject = true;
-            isWorking = true;
-        }
-        else
-        {
-            Debug.Log("hasDest");
-            //navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().smartObject.objectInteractionPlace.position);
-            navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
-        }
-
-        //if (Vector3.Distance(navAgent.pathEndPosition, transform.position) < 0.1f)
-        //{
-        //    Debug.Log("IF==TRUE");
-        //    bestGO.GetComponent<SmartObjectController>().player = gameObject;
-        //    bestGO.GetComponent<SmartObjectController>().smartObject.playerInteractWithObject = true;
-        //    isWorking = true;
-        //}
-        //else
-        //{
-        //    Debug.Log("hasDest");
-        //    navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().smartObject.objectInteractionPlace.position);
-        //}
     }
 
-    public void DescendByTime(float desireValue, float descending)
+    public void DescendByTime(ref float desireValue, float descending)
     {
-        desireValue = desireValue / descending * Time.deltaTime;
+        desireValue -= (desireValue / descending) * Time.deltaTime;
     }
 
     public Intention GetIntention(string intentionName)
@@ -101,40 +109,6 @@ public class AgentController : MonoBehaviour
             }
         }
         return bestObject;
-        //navAgent.SetDestination(bestObject.GetComponent<SmartObjectController>().smartObject.objectInteractionPlace.position);
-        //if (navAgent.destination == null)
-        //{
-        //    bestObject.GetComponent<SmartObjectController>().player = this.gameObject;
-        //    bestObject.GetComponent<SmartObjectController>().smartObject.playerInteractWithObject = true;
-        //    isWorking = true;
-        //}
 
     }
-
-    //public Intention ChooseIntention(List<Intention> intentions, List<Desire> desires)
-    //{
-    //    // Сначала выбираем какая цель имеет наибольшую важность
-    //    Desire topDesire = desires[0];
-    //    foreach (var desire in desires)
-    //    {
-    //        if (desire.value > topDesire.value)
-    //        {
-    //            topDesire = desire;
-    //        }
-    //    }
-
-    //    // Находим наилучшее действие по полезности для заданной цели
-    //    Intention bestIntention = intentions[0];
-    //    float bestUtility = intentions[0].getDesireChange(topDesire);
-    //    foreach (var intention in intentions)
-    //    {
-    //        float utility = -intention.getDesireChange(topDesire);
-    //        if (utility > bestUtility)
-    //        {
-    //            bestUtility = utility;
-    //            bestIntention = intention;
-    //        }
-    //    }
-    //    return bestIntention;
-    //}
 }

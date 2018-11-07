@@ -39,10 +39,9 @@ MonoBehaviour:
     _keys:
     - Satiety
     _values:
-    - 20
+    - 10
   playerInteractWithObject: 0
   objectInteractionPlace: {fileID: 4603632615962102, guid: bc156bcac84b6ca4abc2feed709475ff,
     type: 2}
   actions:
   - {fileID: 11400000, guid: 789944e04ee395b4982feafce38185b7, type: 2}
-  - {fileID: 0}

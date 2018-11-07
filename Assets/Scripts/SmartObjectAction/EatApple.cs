@@ -5,17 +5,17 @@ using UnityEngine.AI;
 
 public class EatApple : SmartObjectAction
 {
-
-    public override void DoAction(GameObject player)
+    //public DictionaryStringToFloat desireChanged;
+    public override void DoAction(GameObject player, GameObject smartGO)
     {
-        // Go to apple position
-        //player.GetComponent<NavMeshAgent>().SetDestination(Vector3.zero);
-
         // Animation = Animation of eating apple
 
         // ++ Satiety
-        player.GetComponent<AgentController>().desires.Find(x => x.name == "Satiety").value += 20;
-        // Destroy apple
+        if (player != null)
+        {
+            player.GetComponent<AgentController>().desires.Find(x => x.name == "Satiety").value += 20;
+            //Destroy(smartGO);
+        }
 
     }
 

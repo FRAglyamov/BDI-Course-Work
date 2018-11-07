@@ -9,6 +9,7 @@ public class SmartObjectActionAssetScript : Editor {
 
     [MenuItem("Tools/ReGenerate Smart Object Action Scripts")]
     static void ReGenerateSmartObjectActionAsset()
+
     {
         string path = Application.dataPath + "/Scripts/SmartObjectAction/";
 

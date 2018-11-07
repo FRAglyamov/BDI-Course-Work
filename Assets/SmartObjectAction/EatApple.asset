@@ -39,5 +39,5 @@ MonoBehaviour:
     _keys:
     - Satiety
     _values:
-    - 20
+    - 10
   animation: {fileID: 0}

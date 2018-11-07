@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9062e478c811984391f093030f6963c, type: 3}
-  m_Name: Good Apple
+  m_Name: Player
   m_EditorClassIdentifier: 
   desireChanged:
     reorderableList:
@@ -39,9 +39,8 @@ MonoBehaviour:
     _keys:
     - Satiety
     _values:
-    - 20
+    - 0.01
   playerInteractWithObject: 0
-  objectInteractionPlace: {fileID: 4743529087967226, guid: e442fed4b5812d34899a1e704fd5c3e3,
-    type: 2}
+  objectInteractionPlace: {fileID: 0}
   actions:
-  - {fileID: 11400000, guid: 789944e04ee395b4982feafce38185b7, type: 2}
+  - {fileID: 11400000, guid: 3d3f7964c1be2e745a1525c1a61efcc5, type: 2}

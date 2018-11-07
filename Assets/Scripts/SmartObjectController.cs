@@ -23,11 +23,13 @@ public class SmartObjectController : MonoBehaviour {
 
 	void Update ()
     {
-		if(smartObject.playerInteractWithObject==true)
+		if(smartObject.playerInteractWithObject==true && player!=null)
         {
-            smartObject.actions[0].DoAction(player);
+            player.GetComponent<AgentController>().isWorking = true;
+            smartObject.actions[0].DoAction(player, this.gameObject);
             //smartObject.scripts[0].GetClass().GetMethod("DoAction");
             smartObject.playerInteractWithObject = false;
+            player.GetComponent<AgentController>().isWorking = false;
         }
 	}
 }
