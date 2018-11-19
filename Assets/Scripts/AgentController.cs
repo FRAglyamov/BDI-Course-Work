@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations;
 
 public class AgentController : MonoBehaviour
 {
@@ -23,15 +24,23 @@ public class AgentController : MonoBehaviour
     public bool isWorking = false;
     public GameObject bestGO;
 
+    Animator anim;
+    AnimatorOverrideController aoc;
+
+
     void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
         smartGOs.AddRange(GameObject.FindGameObjectsWithTag("Smart Object"));
         state = AgentStates.Idle;
+
+        anim = GetComponent<Animator>();
+        //aoc = anim.GetComponent<AnimatorOverrideController>();
     }
 
     void Update()
     {
+        //var controller = anim.runtimeAnimatorController;
         smartGOs.Clear();
         smartGOs.AddRange(GameObject.FindGameObjectsWithTag("Smart Object"));
 

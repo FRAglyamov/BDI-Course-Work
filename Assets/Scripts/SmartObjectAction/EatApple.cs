@@ -14,7 +14,7 @@ public class EatApple : SmartObjectAction
         if (player != null)
         {
             player.GetComponent<AgentController>().desires.Find(x => x.name == "Satiety").value += 20;
-            //Destroy(smartGO);
+            Destroy(smartGO);
         }
 
     }
