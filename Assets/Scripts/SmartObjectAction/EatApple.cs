@@ -13,6 +13,8 @@ public class EatApple : SmartObjectAction
         // ++ Satiety
         if (player != null)
         {
+            player.GetComponent<AgentController>().aoc["UseSmartObject"] = animClip;
+            player.GetComponent<Animator>().SetBool("useSmartObject", true);
             player.GetComponent<AgentController>().desires.Find(x => x.name == "Satiety").value += 20;
             Destroy(smartGO);
         }

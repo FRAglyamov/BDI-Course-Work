@@ -24,8 +24,10 @@ public class AgentController : MonoBehaviour
     public bool isWorking = false;
     public GameObject bestGO;
 
+    public AnimationClip smartObjectAnimation;
+
     Animator anim;
-    AnimatorOverrideController aoc;
+    public AnimatorOverrideController aoc;
 
 
     void Start()
@@ -35,18 +37,25 @@ public class AgentController : MonoBehaviour
         state = AgentStates.Idle;
 
         anim = GetComponent<Animator>();
-        //aoc = anim.GetComponent<AnimatorOverrideController>();
+        aoc = new AnimatorOverrideController(anim.runtimeAnimatorController);
+        anim.runtimeAnimatorController = aoc;
     }
 
     void Update()
     {
-        //var controller = anim.runtimeAnimatorController;
+        //if ()
+        //{
+        //    aoc["Use Smart Object"] = smartObjectAnimation;
+        //}
         smartGOs.Clear();
         smartGOs.AddRange(GameObject.FindGameObjectsWithTag("Smart Object"));
 
         switch (state)
         {
             case AgentStates.Idle:
+
+                anim.SetBool("goTo", false);
+                anim.SetBool("idle", true);
                 if (desires.Exists(x => x.value < 80f) && smartGOs.Count > 0)
                 {
                     bestGO = ChooseSmartObject();
@@ -55,6 +64,9 @@ public class AgentController : MonoBehaviour
                 }
                 break;
             case AgentStates.GoTo:
+
+                anim.SetBool("idle", false);
+                anim.SetBool("goTo", true);
                 if (Vector3.Distance(navAgent.pathEndPosition, transform.position) > 0.1f)
                 {
                     navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
@@ -67,8 +79,12 @@ public class AgentController : MonoBehaviour
                 }
                 break;
             case AgentStates.UseSmartObject:
-                if (isWorking == false)
+
+                anim.SetBool("goTo", false);
+                anim.SetBool("idle", false);
+                if (isWorking == false && !anim.GetCurrentAnimatorStateInfo(0).IsName("Use Smart Object"))
                 {
+                    anim.SetBool("useSmartObject", false);
                     state = AgentStates.Idle;
                 }
                 break;

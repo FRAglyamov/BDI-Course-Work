@@ -575,8 +575,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4014013730282550}
+  - component: {fileID: 136459695754091772}
+  - component: {fileID: 54126229966529150}
+  - component: {fileID: 195900334896461348}
   - component: {fileID: 95161713571809648}
   - component: {fileID: 111143754799610488}
+  - component: {fileID: 114284309771569134}
   m_Layer: 0
   m_Name: ybot
   m_TagString: Untagged
@@ -2077,6 +2081,21 @@ Transform:
   m_Father: {fileID: 4057508775472112}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54126229966529150
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1495063157942934}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!95 &95161713571809648
 Animator:
   serializedVersion: 3
@@ -2086,7 +2105,7 @@ Animator:
   m_GameObject: {fileID: 1495063157942934}
   m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 2a4aa6f945422a248b6ea2b49fe95bbc, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: b48fa96c3b0d79e459cb1e6d751e998e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2109,6 +2128,41 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &114284309771569134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1495063157942934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91e08c63bd6644d419d24c2304abfe21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desires:
+  - name: Satiety
+    value: 100
+    solverIntention: Eat
+  intentions:
+  - name: Eat
+    primitiveAction: 0
+  smartGOs: []
+  state: 0
+  isWorking: 0
+  bestGO: {fileID: 0}
+--- !u!136 &136459695754091772
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1495063157942934}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &137291570559668588
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -2307,3 +2361,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0000009536743, y: -0.19487926, z: 0.001876384}
     m_Extent: {x: 0.94527346, y: 0.7953514, z: 0.1378017}
   m_DirtyAABB: 0
+--- !u!195 &195900334896461348
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1495063157942934}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

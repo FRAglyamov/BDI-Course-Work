@@ -9,7 +9,7 @@ public abstract class SmartObjectAction : ScriptableObject
 {
     [SerializeField]
     public DictionaryStringToFloat desireChanged;
-    public Animation animation;
+    public AnimationClip animClip;
     public abstract void DoAction(GameObject player, GameObject smartGO);
 
 }

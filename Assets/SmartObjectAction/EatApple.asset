@@ -40,4 +40,4 @@ MonoBehaviour:
     - Satiety
     _values:
     - 10
-  animation: {fileID: 0}
+  animClip: {fileID: 7400000, guid: e5fce8a987e15cc47b9e86b0fb01dfdb, type: 3}

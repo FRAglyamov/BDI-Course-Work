@@ -14,10 +14,12 @@ public class SmartObjectController : MonoBehaviour {
     public SmartObject smartObject;
     public DictionaryStringToInt neededItems = new DictionaryStringToInt();
     public Transform objectInteractionPlace;
+    //public DictionaryStringToFloat desireChanged;
 
     void Start ()
     {
         objectInteractionPlace = gameObject.GetComponentInChildren<Transform>();
+        //desireChanged = smartObject.desireChanged;
     }
 	
 
