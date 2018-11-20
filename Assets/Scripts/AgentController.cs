@@ -43,13 +43,8 @@ public class AgentController : MonoBehaviour
 
     void Update()
     {
-        //if ()
-        //{
-        //    aoc["Use Smart Object"] = smartObjectAnimation;
-        //}
         smartGOs.Clear();
         smartGOs.AddRange(GameObject.FindGameObjectsWithTag("Smart Object"));
-
         switch (state)
         {
             case AgentStates.Idle:
@@ -76,14 +71,16 @@ public class AgentController : MonoBehaviour
                     bestGO.GetComponent<SmartObjectController>().player = gameObject;
                     bestGO.GetComponent<SmartObjectController>().smartObject.playerInteractWithObject = true;
                     state = AgentStates.UseSmartObject;
+                    anim.SetBool("useSmartObject", true);
                 }
                 break;
             case AgentStates.UseSmartObject:
 
                 anim.SetBool("goTo", false);
                 anim.SetBool("idle", false);
-                if (isWorking == false && !anim.GetCurrentAnimatorStateInfo(0).IsName("Use Smart Object"))
+                if (anim.GetCurrentAnimatorStateInfo(0).IsName("Use Smart Object") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime>=1f)
                 {
+                    //isWorking = false;
                     anim.SetBool("useSmartObject", false);
                     state = AgentStates.Idle;
                 }

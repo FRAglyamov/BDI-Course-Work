@@ -579,7 +579,6 @@ GameObject:
   - component: {fileID: 54126229966529150}
   - component: {fileID: 195900334896461348}
   - component: {fileID: 95161713571809648}
-  - component: {fileID: 111143754799610488}
   - component: {fileID: 114284309771569134}
   m_Layer: 0
   m_Name: ybot
@@ -1076,7 +1075,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1495063157942934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7416408, y: 8.4218536e-19, z: -0.37928656}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4678034540469168}
@@ -2103,31 +2102,17 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1495063157942934}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2a4aa6f945422a248b6ea2b49fe95bbc, type: 3}
   m_Controller: {fileID: 22100000, guid: b48fa96c3b0d79e459cb1e6d751e998e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!111 &111143754799610488
-Animation:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1495063157942934}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &114284309771569134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2150,6 +2135,8 @@ MonoBehaviour:
   state: 0
   isWorking: 0
   bestGO: {fileID: 0}
+  smartObjectAnimation: {fileID: 0}
+  aoc: {fileID: 0}
 --- !u!136 &136459695754091772
 CapsuleCollider:
   m_ObjectHideFlags: 1
