@@ -9,5 +9,5 @@ public class Desire
 {
     public string name;
     public float value;
-    public string solverIntention;
+    //public string solverIntention;
 }

@@ -5,9 +5,10 @@ using System.IO;
 using System;
 using UnityEditor;
 
-public class SmartObjectActionAssetScript : Editor {
+public class SmartObjectActionAssetScript : Editor
+{
 
-    [MenuItem("Tools/ReGenerate Smart Object Action Scripts")]
+    [MenuItem("Tools/Generate Smart Object Action Scripts")]
     static void ReGenerateSmartObjectActionAsset()
 
     {
@@ -16,22 +17,40 @@ public class SmartObjectActionAssetScript : Editor {
         string[] actionsFull = Directory.GetFiles(path);
 
 
-        int x = 0;
         foreach (string str in actionsFull)
         {
             string filename = str.Substring(str.LastIndexOf("/") + 1);
 
-            if (filename.EndsWith(".cs"))
+            var createdAction = Directory.GetFiles(Application.dataPath + "/SmartObjectAction/");
+            bool isCreated = false;
+
+            if (filename.EndsWith(".cs") && !isCreated)
             {
                 string fileName = filename.Remove(filename.Length - 3);
 
-                var actionName = fileName;
-                var action = ScriptableObject.CreateInstance(actionName);
-                AssetDatabase.CreateAsset(action, "Assets/SmartObjectAction/" + actionName + ".asset");
-                AssetDatabase.SaveAssets();
+                foreach (var act in createdAction)
+                {
+                    if (act.EndsWith(".asset"))
+                    {
+                        //Debug.Log("Act: " + act);
+                        var tmp = act.Split('/');
+                        var actFile = tmp[tmp.Length - 1];
+                        if (actFile.Remove(actFile.Length - 6) == fileName)
+                        {
+                            isCreated = true;
+                            break;
+                        }
+                    }
+                }
+                //Debug.Log("fileName: " + fileName + ": " + isCreated);
 
-                Debug.Log(fileName);
-                x++;
+                if(!isCreated)
+                {
+                    var actionName = fileName;
+                    var action = ScriptableObject.CreateInstance(actionName);
+                    AssetDatabase.CreateAsset(action, "Assets/SmartObjectAction/" + actionName + ".asset");
+                    AssetDatabase.SaveAssets();
+                }
             }
 
         }

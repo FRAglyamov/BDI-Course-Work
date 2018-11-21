@@ -17,7 +17,7 @@ public class AgentController : MonoBehaviour
     public Dictionary<string, int> items = new Dictionary<string, int>();
     public List<Desire> desires = new List<Desire>();
     public List<Desire> curDesires;
-    public List<Intention> intentions = new List<Intention>();
+    //public List<Intention> intentions = new List<Intention>();
     public List<GameObject> smartGOs = new List<GameObject>();
     public AgentStates state;
 
@@ -25,11 +25,10 @@ public class AgentController : MonoBehaviour
     public bool isWorking = false;
     public GameObject bestGO;
 
-    public AnimationClip smartObjectAnimation;
-
     Animator anim;
     public AnimatorOverrideController aoc;
 
+    public TextMesh textMesh;
 
     void Start()
     {
@@ -40,6 +39,9 @@ public class AgentController : MonoBehaviour
         anim = GetComponent<Animator>();
         aoc = new AnimatorOverrideController(anim.runtimeAnimatorController);
         anim.runtimeAnimatorController = aoc;
+
+        if (textMesh == null)
+            textMesh = transform.Find("TextMesh").GetComponent<TextMesh>();
     }
 
     void Update()
@@ -56,7 +58,7 @@ public class AgentController : MonoBehaviour
                 {
                     curDesires = desires.FindAll(x => x.value < 80f);
                     bestGO = ChooseSmartObject();
-                    if(bestGO!=null)
+                    if (bestGO != null)
                     {
                         navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
                         state = AgentStates.GoTo;
@@ -97,7 +99,7 @@ public class AgentController : MonoBehaviour
         }
         foreach (var desire in desires)
         {
-            DescendByTime(ref desire.value, 5f);
+            DescendByTime(ref desire.value, 2f);
             if (desire.value > 100)
             {
                 desire.value = 100;
@@ -107,6 +109,27 @@ public class AgentController : MonoBehaviour
                 desire.value = 0;
             }
         }
+
+        TextMeshUpdate();
+    }
+
+    public void TextMeshUpdate()
+    {
+        
+        textMesh.text = "";
+        foreach (var desire in desires)
+        {
+            textMesh.text += desire.name + ": " + (int)desire.value + "\n";
+        }
+        if (bestGO == null)
+        {
+            textMesh.text += "None";
+        }
+        else
+        {
+            textMesh.text += bestGO.name;
+        }
+        textMesh.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
     }
 
     public void DescendByTime(ref float desireValue, float descending)
@@ -114,10 +137,10 @@ public class AgentController : MonoBehaviour
         desireValue = desireValue - (descending * Time.deltaTime);
     }
 
-    public Intention GetIntention(string intentionName)
-    {
-        return intentions.Find(intention => intention.name.Equals(intentionName));
-    }
+    //public Intention GetIntention(string intentionName)
+    //{
+    //    return intentions.Find(intention => intention.name.Equals(intentionName));
+    //}
 
     public GameObject ChooseSmartObject()
     {
@@ -130,7 +153,7 @@ public class AgentController : MonoBehaviour
         //    }
         //}
         Desire topDesire = curDesires[0];
-        
+
         foreach (var desire in curDesires)
         {
             if (desire.value < topDesire.value)
@@ -138,7 +161,6 @@ public class AgentController : MonoBehaviour
                 topDesire = desire;
             }
         }
-        Debug.Log(topDesire.name);
         GameObject bestObject = smartGOs[0];
         foreach (var smartGO in smartGOs)
         {
