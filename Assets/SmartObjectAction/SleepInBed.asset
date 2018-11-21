@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d7f365c947d2964a8ad5acbebd2ebda, type: 3}
-  m_Name: WalkAround
+  m_Script: {fileID: 11500000, guid: 8005239aa721cf0418586f822ca56f2b, type: 3}
+  m_Name: SleepInBed
   m_EditorClassIdentifier: 
   desireChanged:
     reorderableList:
@@ -18,7 +18,7 @@ MonoBehaviour:
       draggable: 1
       expandable: 1
       multipleSelection: 1
-      isExpanded: 0
+      isExpanded: 1
       label:
         m_Text: Keys
         m_Image: {fileID: 0}
@@ -33,8 +33,11 @@ MonoBehaviour:
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 0
-    _keyValues: []
-    _keys: []
-    _values: []
-  animation: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - Energy
+    _keys:
+    - Energy
+    _values:
+    - 15
+  animClip: {fileID: 7400000, guid: b1af20384f52cf5419959c81d1112b2f, type: 3}

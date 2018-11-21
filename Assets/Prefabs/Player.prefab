@@ -613,21 +613,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1531182422827874
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4327308993197492}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1556167806275732
 GameObject:
   m_ObjectHideFlags: 1
@@ -789,6 +774,8 @@ GameObject:
   - component: {fileID: 195309950968832888}
   - component: {fileID: 114971250597898424}
   - component: {fileID: 95419888544236510}
+  - component: {fileID: 54309705213080254}
+  - component: {fileID: 136251422483922598}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -894,9 +881,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203233330174674}
-  - component: {fileID: 136319403848970952}
-  - component: {fileID: 54134616022896936}
-  - component: {fileID: 95527573851857220}
   m_Layer: 0
   m_Name: ybot
   m_TagString: Untagged
@@ -1328,7 +1312,7 @@ Transform:
   - {fileID: 4288081457129830}
   - {fileID: 4970115070199400}
   m_Father: {fileID: 4619396968377284}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4204418155965730
 Transform:
@@ -1470,19 +1454,6 @@ Transform:
   - {fileID: 4229024764966920}
   m_Father: {fileID: 4524013478752114}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4327308993197492
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1531182422827874}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4619396968377284}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4332103746645338
 Transform:
@@ -1730,7 +1701,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4327308993197492}
   - {fileID: 4203233330174674}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2139,12 +2109,12 @@ Transform:
   m_Father: {fileID: 4229024764966920}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &54134616022896936
+--- !u!54 &54309705213080254
 Rigidbody:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1818863957486614}
+  m_GameObject: {fileID: 1688490911088612}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -2172,24 +2142,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!95 &95527573851857220
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1818863957486614}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 2a4aa6f945422a248b6ea2b49fe95bbc, type: 3}
-  m_Controller: {fileID: 9100000, guid: d8749710d05317243ae98adb5a9e867e, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114971250597898424
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2205,8 +2157,13 @@ MonoBehaviour:
   - name: Satiety
     value: 100
     solverIntention: Eat
+  - name: Energy
+    value: 100
+    solverIntention: Sleep
   intentions:
   - name: Eat
+    primitiveAction: 0
+  - name: Sleep
     primitiveAction: 0
   smartGOs: []
   state: 0
@@ -2214,12 +2171,12 @@ MonoBehaviour:
   bestGO: {fileID: 0}
   smartObjectAnimation: {fileID: 0}
   aoc: {fileID: 0}
---- !u!136 &136319403848970952
+--- !u!136 &136251422483922598
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1818863957486614}
+  m_GameObject: {fileID: 1688490911088612}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
