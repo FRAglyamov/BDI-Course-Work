@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateGoodApple : MonoBehaviour
-{
+public class GameObjectCreator : MonoBehaviour {
 
-    public GameObject goodApple;
-    float spawnCD = 20f;
+    public GameObject createdObject;
+    public float spawnCD = 20f;
     float spawnTime = 0f;
 
     void Start()
     {
-        Instantiate(goodApple, this.transform);
+        Instantiate(createdObject, this.transform);
     }
 
 
@@ -20,11 +19,11 @@ public class CreateGoodApple : MonoBehaviour
         if (transform.childCount != 0)
             spawnTime = Time.time + spawnCD;
         if (Time.time > spawnTime)
-            Instantiate(goodApple, this.transform);
+            Instantiate(createdObject, this.transform);
 
         if (transform.childCount == 0 && Time.time > spawnTime)
         {
-            Instantiate(goodApple, this.transform);
+            Instantiate(createdObject, this.transform);
             spawnTime = Time.time + spawnCD;
         }
 

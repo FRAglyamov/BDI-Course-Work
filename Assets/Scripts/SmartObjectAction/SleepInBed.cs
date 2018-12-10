@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SleepInBed : SmartObjectAction {
+public class SleepInBed : SmartObjectAction
+{
 
     //public DictionaryStringToFloat desireChanged;
     public override void DoAction(GameObject player, GameObject smartGO)
@@ -12,7 +13,16 @@ public class SleepInBed : SmartObjectAction {
         {
             player.GetComponent<AgentController>().aoc["UseSmartObject"] = animClip;
             player.GetComponent<Animator>().SetBool("useSmartObject", true);
-            player.GetComponent<AgentController>().desires.Find(x => x.name == "Energy").value += 20;
+            foreach (var desire in player.GetComponent<AgentController>().desires)
+            {
+                foreach (var changed in desireChanged)
+                {
+                    if (desire.name == changed.Key)
+                    {
+                        desire.value += changed.Value;
+                    }
+                }
+            }
         }
 
     }

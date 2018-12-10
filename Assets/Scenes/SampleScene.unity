@@ -467,7 +467,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114336982367970526, guid: 735fd826b56a97743a21fa6018691778, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 735fd826b56a97743a21fa6018691778, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &1538415778 stripped
@@ -526,6 +527,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114937949220415800, guid: e4613366b68b2ef44989738227089142, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: e4613366b68b2ef44989738227089142, type: 2}
   m_IsPrefabAsset: 0

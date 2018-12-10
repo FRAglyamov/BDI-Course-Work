@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4661844089642020}
   - component: {fileID: 114336982367970526}
+  - component: {fileID: 114473727459928940}
   m_Layer: 0
   m_Name: GoodAppleCreator
   m_TagString: Untagged
@@ -46,11 +47,23 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1238760545324826}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 148f6fa6dc512ab4095d153a65550b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   goodApple: {fileID: 1641763225622926, guid: e442fed4b5812d34899a1e704fd5c3e3, type: 2}
+--- !u!114 &114473727459928940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1238760545324826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a60e6317bde5d4786e65f0fd8b7e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  createdObject: {fileID: 1641763225622926, guid: e442fed4b5812d34899a1e704fd5c3e3,
+    type: 2}
   spawnCD: 20
-  spawnTime: 0

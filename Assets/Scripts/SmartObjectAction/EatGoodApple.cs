@@ -14,7 +14,16 @@ public class EatGoodApple : SmartObjectAction {
         {
             player.GetComponent<AgentController>().aoc["UseSmartObject"] = animClip;
             player.GetComponent<Animator>().SetBool("useSmartObject", true);
-            player.GetComponent<AgentController>().desires.Find(x => x.name == "Satiety").value += 20;
+            foreach (var desire in player.GetComponent<AgentController>().desires)
+            {
+                foreach (var changed in desireChanged)
+                {
+                    if (desire.name == changed.Key)
+                    {
+                        desire.value += changed.Value;
+                    }
+                }
+            }
             Destroy(smartGO);
         }
 

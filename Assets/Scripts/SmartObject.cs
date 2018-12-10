@@ -26,19 +26,9 @@ public class SmartObject : ScriptableObject
 
     public bool playerInteractWithObject = false;
 
-    //public GameObject agent;
     public Transform objectInteractionPlace;
-    public UnityEditorInternal.ReorderableList list;
-
-    //public UnityEvent ActionSequence;
+    //public UnityEditorInternal.ReorderableList list;
     public List<SmartObjectAction> actions;
-
-
-    //public void InteractWithObject(GameObject agent)
-    //{
-    //    playerInteractWithObject = true;
-    //    this.agent = agent;
-    //}
 }
 
 

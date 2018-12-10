@@ -5,17 +5,22 @@ using UnityEngine.AI;
 
 public class EatApple : SmartObjectAction
 {
-    //public DictionaryStringToFloat desireChanged;
     public override void DoAction(GameObject player, GameObject smartGO)
     {
-        // Animation = Animation of eating apple
-
-        // ++ Satiety
         if (player != null)
         {
             player.GetComponent<AgentController>().aoc["UseSmartObject"] = animClip;
             player.GetComponent<Animator>().SetBool("useSmartObject", true);
-            player.GetComponent<AgentController>().desires.Find(x => x.name == "Satiety").value += 10;
+            foreach (var desire in player.GetComponent<AgentController>().desires)
+            {
+                foreach (var changed in desireChanged)
+                {
+                    if (desire.name == changed.Key)
+                    {
+                        desire.value += changed.Value;
+                    }
+                }
+            }
             Destroy(smartGO);
         }
 
