@@ -54,9 +54,9 @@ public class AgentController : MonoBehaviour
 
                 anim.SetBool("goTo", false);
                 anim.SetBool("idle", true);
-                if (desires.Exists(x => x.value < 80f) && smartGOs.Count > 0)
+                if (desires.Exists(x => x.value < 90f) && smartGOs.Count > 0)
                 {
-                    curDesires = desires.FindAll(x => x.value < 80f);
+                    curDesires = desires.FindAll(x => x.value < 90f);
                     bestGO = ChooseSmartObject();
                     if (bestGO != null)
                     {
