@@ -17,7 +17,6 @@ public class AgentController : MonoBehaviour
     public Dictionary<string, int> items = new Dictionary<string, int>();
     public List<Desire> desires = new List<Desire>();
     public List<Desire> curDesires;
-    //public List<Intention> intentions = new List<Intention>();
     public List<GameObject> smartGOs = new List<GameObject>();
     public AgentStates state;
 
@@ -57,7 +56,7 @@ public class AgentController : MonoBehaviour
                 if (desires.Exists(x => x.value < 90f) && smartGOs.Count > 0)
                 {
                     curDesires = desires.FindAll(x => x.value < 90f);
-                    bestGO = ChooseSmartObject();
+                    bestGO = ChooseSmartObjectUtility();
                     if (bestGO != null)
                     {
                         navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
@@ -115,7 +114,7 @@ public class AgentController : MonoBehaviour
 
     public void TextMeshUpdate()
     {
-        
+
         textMesh.text = "";
         foreach (var desire in desires)
         {
@@ -136,11 +135,6 @@ public class AgentController : MonoBehaviour
     {
         desireValue = desireValue - (descending * Time.deltaTime);
     }
-
-    //public Intention GetIntention(string intentionName)
-    //{
-    //    return intentions.Find(intention => intention.name.Equals(intentionName));
-    //}
 
     public GameObject ChooseSmartObject()
     {
@@ -177,6 +171,49 @@ public class AgentController : MonoBehaviour
             return null;
         }
         return bestObject;
+    }
 
+    public GameObject ChooseSmartObjectUtility()
+    {
+
+        GameObject bestObject = smartGOs[0];
+        float bestObjectUtility = CalculateUtility(bestObject);
+
+        foreach (var smartGO in smartGOs)
+        {
+            float curGOUtility = CalculateUtility(smartGO);
+
+            if (bestObjectUtility < curGOUtility)
+            {
+                bestObject = smartGO;
+            }
+        }
+
+        return bestObject;
+    }
+
+    public float CalculateUtility(GameObject smartObject)
+    {
+        Desire curDesire;
+        float smartObjectUtility = 0f;
+        float utilityBefore = 0f;
+        float utilityAfter = 0f;
+        foreach (var smartObjectDesire in smartObject.GetComponent<SmartObjectController>().smartObject.desireChanged)
+        {
+            curDesire = curDesires.Find(x => x.name == smartObjectDesire.Key);
+            if (curDesire == null)
+            {
+                continue;
+            }
+            utilityBefore = curDesire.value;
+            utilityAfter = smartObjectDesire.Value + curDesire.value;
+            if (utilityAfter > 100f)
+            {
+                utilityAfter = 100f;
+            }
+            smartObjectUtility = (utilityAfter - utilityBefore) / curDesire.value;
+            Debug.Log("Object: " + smartObject.name + " Desire: " + curDesire.name + " Before: " + utilityBefore + " After: " + utilityAfter + " Utility: " + smartObjectUtility);
+        }
+        return smartObjectUtility;
     }
 }
