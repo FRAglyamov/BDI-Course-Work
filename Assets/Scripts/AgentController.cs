@@ -7,6 +7,8 @@ using UnityEngine.Animations;
 
 public class AgentController : MonoBehaviour
 {
+
+
     public enum AgentStates
     {
         Idle,
@@ -69,8 +71,13 @@ public class AgentController : MonoBehaviour
 
                 anim.SetBool("idle", false);
                 anim.SetBool("goTo", true);
+                if (bestGO == null)
+                {
+                    state = AgentStates.Idle;
+                }
                 if (Vector3.Distance(navAgent.pathEndPosition, transform.position) > 0.1f)
                 {
+                    //Debug.Log(this.gameObject.name + " GoTo " + bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
                     navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
                 }
                 else
@@ -186,6 +193,7 @@ public class AgentController : MonoBehaviour
             if (bestObjectUtility < curGOUtility)
             {
                 bestObject = smartGO;
+                bestObjectUtility = curGOUtility;
             }
         }
 
@@ -211,7 +219,8 @@ public class AgentController : MonoBehaviour
             {
                 utilityAfter = 100f;
             }
-            smartObjectUtility = (utilityAfter - utilityBefore) / curDesire.value;
+            Debug.Log("Desire " + curDesire.name + " weight: " + curDesire.GetDesireWeight(curDesire.value / 100));
+            smartObjectUtility = (utilityAfter - utilityBefore) * curDesire.GetDesireWeight(curDesire.value / 100);
             Debug.Log("Object: " + smartObject.name + " Desire: " + curDesire.name + " Before: " + utilityBefore + " After: " + utilityAfter + " Utility: " + smartObjectUtility);
         }
         return smartObjectUtility;

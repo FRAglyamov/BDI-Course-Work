@@ -39,5 +39,5 @@ MonoBehaviour:
     _keys:
     - Satiety
     _values:
-    - 10
+    - 15
   animClip: {fileID: 7400000, guid: d689db66cfc2d1647a7a6604347b288f, type: 3}

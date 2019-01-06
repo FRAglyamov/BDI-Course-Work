@@ -19,7 +19,8 @@ public class SmartObjectController : MonoBehaviour
 
     void Start()
     {
-        objectInteractionPlace = gameObject.GetComponentInChildren<Transform>();
+        objectInteractionPlace = transform.Find("Interaction Place");
+        //Debug.Log("Interaction Place = " + objectInteractionPlace.name + ", Parent = " + objectInteractionPlace.parent.name + ", Position" + objectInteractionPlace.position);
         CalculateAllActionChanges();
     }
 

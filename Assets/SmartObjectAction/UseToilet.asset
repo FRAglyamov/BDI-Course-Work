@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9062e478c811984391f093030f6963c, type: 3}
-  m_Name: Apple
+  m_Script: {fileID: 11500000, guid: 9d6b33f4212fc244787cf747a6b39008, type: 3}
+  m_Name: UseToilet
   m_EditorClassIdentifier: 
   desireChanged:
     reorderableList:
@@ -35,13 +35,9 @@ MonoBehaviour:
     reqReferences: {fileID: 0}
     isExpanded: 1
     _keyValues:
-    - Satiety
+    - Bladder
     _keys:
-    - Satiety
+    - Bladder
     _values:
-    - 15
-  playerInteractWithObject: 0
-  objectInteractionPlace: {fileID: 4603632615962102, guid: bc156bcac84b6ca4abc2feed709475ff,
-    type: 2}
-  actions:
-  - {fileID: 11400000, guid: 789944e04ee395b4982feafce38185b7, type: 2}
+    - 30
+  animClip: {fileID: 7400000, guid: 9222590770beec34c9664745d1230c2a, type: 3}

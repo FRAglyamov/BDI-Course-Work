@@ -39,5 +39,5 @@ MonoBehaviour:
     _keys:
     - Energy
     _values:
-    - 20
+    - 30
   animClip: {fileID: 7400000, guid: b1af20384f52cf5419959c81d1112b2f, type: 3}

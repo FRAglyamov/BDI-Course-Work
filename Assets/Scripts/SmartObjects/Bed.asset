@@ -39,7 +39,7 @@ MonoBehaviour:
     _keys:
     - Energy
     _values:
-    - 20
+    - 30
   playerInteractWithObject: 0
   objectInteractionPlace: {fileID: 0}
   actions:
