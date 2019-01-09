@@ -40,7 +40,5 @@ MonoBehaviour:
     - Energy
     _values:
     - 30
-  playerInteractWithObject: 0
-  objectInteractionPlace: {fileID: 0}
   actions:
   - {fileID: 11400000, guid: 81c0704f955127d47b91eb222041e438, type: 2}

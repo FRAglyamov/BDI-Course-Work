@@ -83,9 +83,10 @@ public class AgentController : MonoBehaviour
                 else
                 {
                     bestGO.GetComponent<SmartObjectController>().player = gameObject;
-                    bestGO.GetComponent<SmartObjectController>().smartObject.playerInteractWithObject = true;
+                    bestGO.GetComponent<SmartObjectController>().isPlayerInteractWithObject = true;
                     state = AgentStates.UseSmartObject;
                     anim.SetBool("useSmartObject", true);
+                    isWorking = true;
                 }
                 break;
             case AgentStates.UseSmartObject:
@@ -94,9 +95,10 @@ public class AgentController : MonoBehaviour
                 anim.SetBool("idle", false);
                 if (anim.GetCurrentAnimatorStateInfo(0).IsName("Use Smart Object") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
                 {
-                    //isWorking = false;
                     anim.SetBool("useSmartObject", false);
                     state = AgentStates.Idle;
+                    isWorking = false;
+                    bestGO.GetComponent<SmartObjectController>().isPlayerInteractWithObject = false;
                 }
                 break;
             default:

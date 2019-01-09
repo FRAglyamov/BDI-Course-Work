@@ -24,9 +24,9 @@ public class SmartObject : ScriptableObject
 
     public DictionaryStringToFloat desireChanged = new DictionaryStringToFloat();
 
-    public bool playerInteractWithObject = false;
+    //public bool playerInteractWithObject = false;
 
-    public Transform objectInteractionPlace;
+    //public Transform objectInteractionPlace;
     //public UnityEditorInternal.ReorderableList list;
     public List<SmartObjectAction> actions;
 }
