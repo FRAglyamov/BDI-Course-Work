@@ -22,6 +22,9 @@ public class AgentController : MonoBehaviour
     public List<GameObject> smartGOs = new List<GameObject>();
     public AgentStates state;
 
+    [SerializeField]
+    public Dictionary<GameObject, float> objectsUtility = new Dictionary<GameObject, float>();
+
     NavMeshAgent navAgent;
     public bool isWorking = false;
     public GameObject bestGO;
@@ -79,6 +82,10 @@ public class AgentController : MonoBehaviour
                 {
                     //Debug.Log(this.gameObject.name + " GoTo " + bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
                     navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
+                    if(bestGO.GetComponent<SmartObjectController>().isPlayerInteractWithObject)
+                    {
+
+                    }
                 }
                 else
                 {
@@ -208,6 +215,7 @@ public class AgentController : MonoBehaviour
         float smartObjectUtility = 0f;
         float utilityBefore = 0f;
         float utilityAfter = 0f;
+        objectsUtility.Clear();
         foreach (var smartObjectDesire in smartObject.GetComponent<SmartObjectController>().smartObject.desireChanged)
         {
             curDesire = curDesires.Find(x => x.name == smartObjectDesire.Key);
@@ -223,6 +231,7 @@ public class AgentController : MonoBehaviour
             }
             Debug.Log("Desire " + curDesire.name + " weight: " + curDesire.GetDesireWeight(curDesire.value / 100));
             smartObjectUtility = (utilityAfter - utilityBefore) * curDesire.GetDesireWeight(curDesire.value / 100);
+            objectsUtility.Add(smartObject, smartObjectUtility);
             Debug.Log("Object: " + smartObject.name + " Desire: " + curDesire.name + " Before: " + utilityBefore + " After: " + utilityAfter + " Utility: " + smartObjectUtility);
         }
         return smartObjectUtility;

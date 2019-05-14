@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -41,12 +42,12 @@ MonoBehaviour:
     - Satiety
     - Satiety
     - Satiety
+    - Satiety
+    - Satiety
+    - Satiety
     _keys:
     - Satiety
     _values:
-    - 20
-  playerInteractWithObject: 0
-  objectInteractionPlace: {fileID: 4743529087967226, guid: e442fed4b5812d34899a1e704fd5c3e3,
-    type: 2}
+    - 30
   actions:
   - {fileID: 11400000, guid: 68a79f2fac459f249a89934c95ec33e5, type: 2}
