@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations;
@@ -8,7 +9,8 @@ using UnityEngine.Animations;
 public class AgentController : MonoBehaviour
 {
 
-
+    [SerializeField]
+    public Dictionary<GameObject, float> objectsUtility = new Dictionary<GameObject, float>();
     public enum AgentStates
     {
         Idle,
@@ -20,10 +22,10 @@ public class AgentController : MonoBehaviour
     public List<Desire> desires = new List<Desire>();
     public List<Desire> curDesires;
     public List<GameObject> smartGOs = new List<GameObject>();
+    public List<GameObject> otherAgents = new List<GameObject>();
     public AgentStates state;
 
-    [SerializeField]
-    public Dictionary<GameObject, float> objectsUtility = new Dictionary<GameObject, float>();
+
 
     NavMeshAgent navAgent;
     public bool isWorking = false;
@@ -42,6 +44,8 @@ public class AgentController : MonoBehaviour
 
         anim = GetComponent<Animator>();
         aoc = new AnimatorOverrideController(anim.runtimeAnimatorController);
+        aoc["Idle"] = anim.GetCurrentAnimatorClipInfo(0).Where(x => x.clip.name == "Idle").ToArray()[0].clip;
+        //aoc["GoTo"] = anim.GetCurrentAnimatorClipInfo(0).Where(x => x.clip.name == "GoTo").ToArray()[0].clip;
         anim.runtimeAnimatorController = aoc;
 
         if (textMesh == null)
@@ -52,6 +56,8 @@ public class AgentController : MonoBehaviour
     {
         smartGOs.Clear();
         smartGOs.AddRange(GameObject.FindGameObjectsWithTag("Smart Object"));
+        otherAgents.AddRange(GameObject.FindGameObjectsWithTag("Player").Where(x => x != gameObject));
+
         switch (state)
         {
             case AgentStates.Idle:
@@ -74,6 +80,7 @@ public class AgentController : MonoBehaviour
 
                 anim.SetBool("idle", false);
                 anim.SetBool("goTo", true);
+                
                 if (bestGO == null)
                 {
                     state = AgentStates.Idle;
@@ -84,7 +91,13 @@ public class AgentController : MonoBehaviour
                     navAgent.SetDestination(bestGO.GetComponent<SmartObjectController>().objectInteractionPlace.position);
                     if(bestGO.GetComponent<SmartObjectController>().isPlayerInteractWithObject)
                     {
-
+                        foreach (var item in objectsUtility)
+                        {
+                            if (bestGO != item.Key && !item.Key.GetComponent<SmartObjectController>().isPlayerInteractWithObject)
+                            {
+                                bestGO = item.Key;
+                            }
+                        }
                     }
                 }
                 else
@@ -127,6 +140,15 @@ public class AgentController : MonoBehaviour
 
         TextMeshUpdate();
     }
+
+
+    //public void IsStuck()
+    //{
+    //    float checkTime = 2f;
+    //    Vector3 curPosition = transform.position;
+    //    Vector3 prevPosition;
+    //}
+
 
     public void TextMeshUpdate()
     {
@@ -234,6 +256,7 @@ public class AgentController : MonoBehaviour
             objectsUtility.Add(smartObject, smartObjectUtility);
             Debug.Log("Object: " + smartObject.name + " Desire: " + curDesire.name + " Before: " + utilityBefore + " After: " + utilityAfter + " Utility: " + smartObjectUtility);
         }
+        objectsUtility.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
         return smartObjectUtility;
     }
 }
